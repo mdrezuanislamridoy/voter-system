@@ -1,0 +1,28 @@
+name: Build
+
+on: 
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: initialize
+        uses: actions/checkout@v6.0.2
+      - name: node initialize
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 22.x
+          cache: 'npm'
+      - name: npm install
+        run: npm install
+      
+      - name: build
+        run: npm run build
+      
+      - name: upload build on artifacts
+        uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          name: nextjs-build
+          path: out/
+      
